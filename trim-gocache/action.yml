@@ -10,5 +10,5 @@ inputs:
     default: '2'
 runs:
   using: 'node24'
-  main: 'main.js'
-  post: 'trim.js'
+  main: 'dist/main/index.js'
+  post: 'dist/trim/index.js'

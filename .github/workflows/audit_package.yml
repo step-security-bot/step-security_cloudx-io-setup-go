@@ -11,6 +11,11 @@ on:
         description: "Specify a base branch"
         required: false
         default: "main"
+      working_directory:
+        description: "Comma-separated list of action directories to build"
+        required: false
+        default: "trim-gocache"
+
   schedule:
     - cron: "0 0 * * 1"
 
@@ -20,6 +25,7 @@ jobs:
     with:
       force: ${{ inputs.force || false }}
       base_branch: ${{ inputs.base_branch || 'main' }}
+      working_directory: ${{ inputs.working_directory || 'trim-gocache' }}
 
 permissions:
   contents: write

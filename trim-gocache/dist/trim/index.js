@@ -1,3 +1,11 @@
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
+var __webpack_exports__ = {};
+
+;// CONCATENATED MODULE: external "fs"
+const external_fs_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
+;// CONCATENATED MODULE: external "path"
+const external_path_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("path");
+;// CONCATENATED MODULE: ./trim.js
 // Trim GOCACHE to this run's working set before actions/cache saves it.
 //
 // Go touches an entry's mtime whenever it's used (that's how its own 5-day
@@ -22,8 +30,8 @@
 // order — after the consumer workflow's build/lint/test steps populate
 // GOCACHE, before actions/cache's post-save tars and uploads it.
 
-import fs from 'fs';
-import path from 'path';
+
+
 
 // Go's gcTrimLimit: entries unused for this long are dead even to Go's own
 // GC. Fallback cutoff if the job start time is somehow missing.
@@ -34,7 +42,7 @@ const MAX_STALENESS_HOURS = Math.floor(Number.MAX_SAFE_INTEGER / HOUR_MS);
 
 const dir = process.env.INPUT_GOCACHE;
 
-if (!dir || !fs.existsSync(dir)) {
+if (!dir || !external_fs_namespaceObject.existsSync(dir)) {
   console.log(`GOCACHE ${dir || '(unset)'} does not exist; nothing to trim.`);
   process.exit(0);
 }
@@ -59,15 +67,15 @@ if (!Number.isFinite(startMs)) {
 
 let kept = 0, keptBytes = 0, removed = 0, removedBytes = 0;
 (function walk(d) {
-  for (const ent of fs.readdirSync(d, { withFileTypes: true })) {
-    const p = path.join(d, ent.name);
+  for (const ent of external_fs_namespaceObject.readdirSync(d, { withFileTypes: true })) {
+    const p = external_path_namespaceObject.join(d, ent.name);
     if (ent.isDirectory()) { walk(p); continue; }
     if (!ent.isFile()) continue;
     let s;
-    try { s = fs.statSync(p); }
+    try { s = external_fs_namespaceObject.statSync(p); }
     catch { continue; /* races are fine */ }
     if (s.mtimeMs >= cutoff) { kept++; keptBytes += s.size; continue; }
-    try { fs.unlinkSync(p); removed++; removedBytes += s.size; }
+    try { external_fs_namespaceObject.unlinkSync(p); removed++; removedBytes += s.size; }
     catch (e) { console.warn(`unlink ${p}: ${e.message}`); }
   }
 })(dir);
@@ -78,3 +86,4 @@ console.log(
   `kept ${kept} files (${mb(keptBytes)}MB), ` +
   `removed ${removed} files (${mb(removedBytes)}MB)`
 );
+
