@@ -1,0 +1,16 @@
+{
+  "name": "trim-gocache",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "ncc build main.js -o dist/main && ncc build trim.js -o dist/trim"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.0",
+    "axios": "^1.20.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.45.0"
+  }
+}
