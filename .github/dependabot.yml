@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /trim-gocache/dist/main
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /trim-gocache/dist/trim
+    schedule:
+      interval: daily
+
+  - package-ecosystem: npm
+    directory: /trim-gocache
+    schedule:
+      interval: daily
